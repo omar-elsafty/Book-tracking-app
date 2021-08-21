@@ -7,7 +7,7 @@ let options = [
   { value: "none", label: "None" },
 ];
 
-function Select({ value = "move", handleChange }) {
+function Select({ value = "none", handleChange }) {
   return (
     <div className="book-shelf-changer">
       <select value={value} onChange={handleChange}>

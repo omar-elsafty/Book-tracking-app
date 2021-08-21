@@ -13,7 +13,7 @@ function Search() {
 
   let handleSelectchanges = async (book, shelf) => {
     try {
-      let result = await update(book, shelf);
+      await update(book, shelf);
     } catch (error) {}
   };
 
