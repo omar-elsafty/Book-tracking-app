@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Shelf from "../components/sharedComponents/Shelf";
-import { getAll, update } from "../BooksAPI";
 import { Link } from "react-router-dom";
 
-function Home() {
-  let [books, setBooks] = useState([]);
+function Home({ books, handleSelectchanges }) {
   let [shelves, setShelves] = useState([
     {
       label: "Currently Reading",
@@ -24,34 +22,13 @@ function Home() {
   ]);
 
   useEffect(() => {
-    let handleShelves = async () => {
-      let books = await getAll();
-      setBooks(books);
-      setShelves((shelves) =>
-        shelves.map((shelf) => ({
-          ...shelf,
-          books: books.filter((b) => b.shelf === shelf.value),
-        }))
-      );
-    };
-    handleShelves();
-  }, []);
-
-  let handleSelectchanges = async (book, shelf) => {
-    try {
-      let result = await update(book, shelf);
-      setShelves((shelves) =>
-        shelves.map((shelf) => {
-          let { value } = shelf;
-          let filteredArray = result[value];
-          return {
-            ...shelf,
-            books: books.filter((b) => filteredArray.includes(b.id)),
-          };
-        })
-      );
-    } catch (error) {}
-  };
+    setShelves((shelves) =>
+      shelves.map((shelf) => ({
+        ...shelf,
+        books: books.filter((b) => b.shelf === shelf.value),
+      }))
+    );
+  }, [books]);
 
   return (
     <div className="list-books">
